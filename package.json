@@ -1,0 +1,21 @@
+{
+  "name": "inverted-index",
+  "version": "1.0.0",
+  "description": "this app builds index from texts in a .json file and allows you search through the file for words in that text.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-rhenshaw/inverted-index.git"
+  },
+  "keywords": [
+    "inverted-index"
+  ],
+  "author": "HENSHAW ROWLAND",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andela-rhenshaw/inverted-index/issues"
+  },
+  "homepage": "https://github.com/andela-rhenshaw/inverted-index#readme"
+}
