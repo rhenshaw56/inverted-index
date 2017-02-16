@@ -3,22 +3,13 @@ dist: trusty
 language: node_js
 
 node_js:
-  - "6"
-
-before_install:
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
-before_script:
-  - npm install
-before_deploy: |
-  -function keep_alive() {
-    while true; do
-      echo -en "\a"
-      sleep 5
-    done
-  }
-  keep_alive &
+  - 6
 
 script: npm test
+
+before_install:
+ - export CHROME_BIN=/usr/bin/google-chrome
+ - export DISPLAY=:99.0
+ - sh -e /etc/init.d/xvfb start
+
+
