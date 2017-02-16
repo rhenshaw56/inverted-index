@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "this app builds index from texts in a .json file and allows you search through the file for words in that text.",
   "scripts": {
-    "start": "node node_modules/gulp/bin/gulp"
+    "start": "node node_modules/gulp/bin/gulp",
+    "test": "node_modules/.bin/karma start karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
     "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "jasmine-expect": "^3.6.0",
     "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.0",

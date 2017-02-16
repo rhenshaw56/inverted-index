@@ -1,19 +1,29 @@
 const gulp = require('gulp');
-const server = require('browser-sync').create();
+const browserSync = require('browser-sync').create();
+var Server = require('karma').Server;
 
-// bs task to start server
-// run "gulp bs" to start
-gulp.task('bs', () => {
-    server.init({
-        server: {
-            baseDir: './src/app/',
-            index: 'index.html'
-        }
-    });
+
+//TASK TO START BROWSER-SYNC SERVER
+gulp.task('browserSync', () => {
+  browserSync.init({
+    server: {
+      baseDir: './src/app/',
+      index: 'index.html'
+    }
+  });
 });
 
-gulp.task('watch', ['bs'], () => {
-    gulp.watch('./src/app/index.html').on('change', server.reload);
-    gulp.watch('./src/app/index.js').on('change', server.reload);
-    gulp.watch('./src/app/css/style.css').on('change', server.reload);
+//TASK TO START APP AND WATCH FOR CHANGES
+gulp.task('default', ['browserSync'], () => {
+  gulp.watch('./src/app/index.html').on('change', browserSync.reload);
+  gulp.watch('./src/app/index.js').on('change', browserSync.reload);
+  gulp.watch('./src/app/css/style.css').on('change', browserSync.reload);
+});
+
+//TASK TO RUN TESTS
+gulp.task('test', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });

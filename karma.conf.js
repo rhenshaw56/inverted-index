@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Mon Feb 13 2017 18:08:00 GMT+0100 (WAT)
+// Generated on Thu Feb 16 2017 16:57:29 GMT+0100 (WAT)
 
 module.exports = function(config) {
   config.set({
@@ -14,15 +14,8 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [
-      './app/src/index.js',
-      './src/app/index.js',
-      './src/app/app.js',
-      './src/inverted-index/invertedIndex.js',
-      './src/inverted-index/inverted-app/index.js',
-      './src/inverted-index-app/invertedIndex.js',
-      './src/inverted-index-app/invertedIndex.js',
-      './tests/tests.js'
+    files: [      './src/inverted-index-app/InvertedIndex.js',
+      './jasmine/spec/spec.js'
     ],
 
 
@@ -62,7 +55,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
