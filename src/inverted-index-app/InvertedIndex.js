@@ -10,12 +10,3 @@ var InvertedIndex = {
 	}
 
 };
-
-const newBook = [
-    {
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  }
-];
-
-//console.log(InvertedIndex.validateInput(newBook));
