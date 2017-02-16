@@ -1,6 +1,5 @@
 # **INVERTED-INDEX**
-
-![Build Status](https://travis-ci.org/andela-rhenshaw/inverted-index.svg?branch=master)](https://travis-ci.org/andela-rhenshaw/inverted-index)
+[![Build Status](https://travis-ci.org/andela-rhenshaw/inverted-index.svg?branch=master)](https://travis-ci.org/andela-rhenshaw/inverted-index)
 
 
 
