@@ -32,8 +32,10 @@ class InvertedIndex {
 		.split(/\s+/);
 	}
 
-	returnUniqueWords(text) {
-
+	returnUniqueWords(words) {
+		return words.filter((element,index) => {
+			words.indexOf(element) === index;
+		});
 	}
 
 	buildIndex(books) {
