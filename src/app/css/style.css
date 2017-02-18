@@ -15,7 +15,7 @@
 }
 
 .header{
-  background: black;
+  background: grey;
   color: #fff;
   padding: 11px;
   width: 1000px;
@@ -98,8 +98,12 @@ label{
   border: none;
   padding: 10px;
   border-radius: 3px;
-  background: #4CAF50;
+  background: palevioletred;
   color: #fff;
   font-size: 14px;
   cursor: pointer;
+}
+
+.btn-group {
+  margin-left: 20px;
 }

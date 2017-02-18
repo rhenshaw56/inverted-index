@@ -10,15 +10,24 @@ angular.module('invertedIndexApp', [])
           $scope.$apply(() => {
             if (book.type === 'application/json') {
               $scope.bookList.push(book);
-            //   console.log(booklist[0]);
+              console.log('validated');
               status = true;
             } else {
               $scope.badBooks.push(book.name);
+              console.log('not validated');
             }
           });
         });
+        console.log($scope.bookList.length);
         return status;
       };
+
+      // $scope.buildIndex = (file) => {
+      // 	const fr = new FileReader();
+      // 	fr.onload() => {
+
+      // 	}
+      // }
       document.getElementById('bookFile')
             .addEventListener('change', $scope.validateBooks);
     }]);
