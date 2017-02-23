@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Feb 16 2017 16:57:29 GMT+0100 (WAT)
+// Generated on Thu Feb 23 2017 20:27:53 GMT+0100 (WAT)
 
 module.exports = function(config) {
   config.set({
@@ -14,7 +14,8 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [      './src/inverted-index-app/InvertedIndex.js',
+    files: [
+      './src/inverted-index-app/InvertedIndex.js',
       './jasmine/spec/spec.js'
     ],
 
@@ -51,6 +52,13 @@ module.exports = function(config) {
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
+
+    plugins: [
+  // Karma will require() these plugins
+  'karma-verbose-reporter',
+  'karma-jasmine',
+  'karma-chrome-launcher'
+],
 
 
     // start these browsers

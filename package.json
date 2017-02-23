@@ -31,7 +31,8 @@
     "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.0",
-    "karma-jasmine": "^1.1.0"
+    "karma-jasmine": "^1.1.0",
+    "karma-verbose-reporter": "0.0.5"
   },
   "dependencies": {
     "browser-sync": "^2.18.7",
