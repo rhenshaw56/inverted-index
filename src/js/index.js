@@ -8,7 +8,7 @@ function createBook() {
   const data = `text/json;charset=utf-8, ${encodeURIComponent(file)}`;
   const link = document.getElementById('link');
   link.href = `data:${  data}`;
-  link.download = `${download }.json`;
+  link.download = `${ name }.json`;
   link.innerHTML = `download ${  link.download}`;
   link.style.display = 'block';
 }

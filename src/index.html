@@ -4,7 +4,6 @@
     <title>Inverted Index</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
 </head>
 
 <body ng-controller="BookController">
@@ -41,10 +40,16 @@
                 <button class="btn" id="btnUpload" onclick="createBook()">done</button>
                 <button class="btn" id="btnUpload">done</button>
             </div>
+            <div>
+                <p> {{badMessage}}</p>
+            </div>
 
     </div>
 </div>
-<script type="text/javascript" src = "index.js"></script>
+<script type="text/javascript" src = "./inverted-index-app/InvertedIndex.js"></script>
+<script src="./js/index.js"></script>
+<script type="text/javascript" src="./app/app.js"></script>
+
 </body>
 
 </html>

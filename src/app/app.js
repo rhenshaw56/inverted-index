@@ -1,20 +1,25 @@
-angular.module('invertedIndexApp', [])
+const invertedIndexApp = angular.module('invertedIndexApp', [])
     .controller('BookController', ['$scope', ($scope) => {
-      $scope.bookList = [];
+      $scope.bookList = {};
+      $scope.invertedIndex = new InvertedIndex();
 
-      $scope.validateBooks = (bookFile) => {
+
+      $scope.uploadBooks = (bookFile) => {
         let status = false;
         const books = Array.from(bookFile.target.files);
-        $scope.badBooks = [];
         books.forEach((book) => {
           $scope.$apply(() => {
-            if (book.type === 'application/json') {
-              $scope.bookList.push(book);
+            if (book.type === 'application/json' && !$scope.bookList[book]) {
+              $scope.bookList[book.name] = book;
+
+              $scope.readFile(book);
+
               console.log('validated');
               status = true;
-            } else {
-              $scope.badBooks.push(book.name);
+            }else{
+              $scope.badMessage = 'This file is not a JSON file';
               console.log('not validated');
+              return;
             }
           });
         });
@@ -22,12 +27,22 @@ angular.module('invertedIndexApp', [])
         return status;
       };
 
-      // $scope.buildIndex = (file) => {
-      // 	const fr = new FileReader();
-      // 	fr.onload() => {
+      $scope.readFile = (file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          let bookFile = {};
+          try{
+            bookFile = JSON.parse(e.target.result);
+            console.log(bookFile);
+          }catch(err){
+            $scope.badMessage = "Could not read file " + file.name;
+            return;
+          }
+        };
+         reader.readAsText(file);
 
-      // 	}
-      // }
+      };
+
       document.getElementById('bookFile')
-            .addEventListener('change', $scope.validateBooks);
+            .addEventListener('change', $scope.uploadBooks);
     }]);
