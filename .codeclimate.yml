@@ -18,14 +18,4 @@ engines:
 ratings:
   paths:
   - "**.css"
-  - "**.inc"
   - "**.js"
-  - "**.jsx"
-  - "**.module"
-  - "**.php"
-  - "**.py"
-  - "**.rb"
-exclude_paths:
-- "tests/"
-- "spec/"
-- "**/vendor/"
