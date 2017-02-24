@@ -34,7 +34,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'spec', 'coverage', 'coveralls', 'verbose'],
 
 
     // web server port
@@ -54,11 +54,13 @@ module.exports = function(config) {
     autoWatch: true,
 
     plugins: [
-  // Karma will require() these plugins
-  'karma-verbose-reporter',
-  'karma-jasmine',
-  'karma-chrome-launcher'
-],
+      'karma-chrome-launcher',
+      'karma-coverage',
+      'karma-coveralls',
+      'karma-jasmine',
+      'karma-spec-reporter',
+      'karma-verbose-reporter'
+    ],
 
 
     // start these browsers

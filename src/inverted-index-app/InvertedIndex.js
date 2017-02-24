@@ -51,7 +51,7 @@ class InvertedIndex {
 * @returns {Array} -returns an array of words in lower-cases with no characters
 * @memberOf InvertedIndex
 */
-  returnAsArrayOfWords(text) {
+  generateToken(text) {
     return text.toLowerCase()
     .replace(/[^\w\s]|_/g, '')
     .split(/\s+/);
@@ -80,7 +80,7 @@ class InvertedIndex {
     let nonUniqueWords = '';
     let words = '';
     books.forEach((book) => {
-      nonUniqueWords = this.returnAsArrayOfWords(this.getBookAsText(book));
+      nonUniqueWords = this.generateToken(this.getBookAsText(book));
       words = this.returnUniqueWords(nonUniqueWords);
       words.forEach((word) => {
         this.addWordToMainIndex(word, book.title);
@@ -116,7 +116,7 @@ class InvertedIndex {
     const searchResult = {};
     let output = '';
     const wordsToSearch = this.returnUniqueWords(this
-       .returnAsArrayOfWords(searchedWords));
+       .generateToken(searchedWords));
     wordsToSearch.forEach((searchedWord) => {
       const indexedWords = Object.keys(this.mainIndex);
       indexedWords.forEach((indexedWord) => {

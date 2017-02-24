@@ -44,9 +44,9 @@ describe('Inverted Index Test', () => {
   describe('Returns a string without characters and all in lower case',
    () => {
      it('should return a string all in lower cases', () => {
-       expect(invertedIndex.returnAsArrayOfWords('ABC.(D?RFG,HIJKL'))
+       expect(invertedIndex.generateToken('ABC.(D?RFG,HIJKL'))
        .toEqual(['abcdrfghijkl']);
-       expect(invertedIndex.returnAsArrayOfWords(`ALICE IN,
+       expect(invertedIndex.generateToken(`ALICE IN,
         WONDERLAND`)).toEqual(['alice', 'in', 'wonderland']);
      });
    });

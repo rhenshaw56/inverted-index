@@ -7,6 +7,9 @@ node_js:
 
 script: npm test
 
+after_script:
+- cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+
 before_install:
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0

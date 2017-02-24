@@ -12,7 +12,10 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
             if (book.type === 'application/json' && !$scope.bookList[book]) {
               $scope.bookList[book.name] = book;
 
-              $scope.readFile(book);
+              const bookRead = $scope.readFile(book);
+              if ($scope.invertedIndex.validateInput(bookRead)) {
+
+              }
 
               console.log('validated');
               status = true;
@@ -34,6 +37,7 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
           try{
             bookFile = JSON.parse(e.target.result);
             console.log(bookFile);
+            return bookFile;
           }catch(err){
             $scope.badMessage = "Could not read file " + file.name;
             return;
