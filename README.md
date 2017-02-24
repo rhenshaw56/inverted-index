@@ -1,4 +1,5 @@
 # **INVERTED-INDEX**
+[![Coverage Status](https://coveralls.io/repos/github/andela-rhenshaw/inverted-index/badge.svg?branch=development)](https://coveralls.io/github/andela-rhenshaw/inverted-index?branch=development)
 [![Build Status](https://travis-ci.org/andela-rhenshaw/inverted-index.svg?branch=master)](https://travis-ci.org/andela-rhenshaw/inverted-index)
 
 
@@ -26,7 +27,7 @@ This projects displays the functionalities of the inverted index algorithm and h
 
 ### How users can get started with the project
 Open your browser to visit the [homepage] and follow the instructions there:
- 
+
 - Upload valid json book files (that have a text and title property).
 - Select an uploaded book file(s) from the selector and click create index
 - The index for the book(s) is/are shown in tabular format*
@@ -39,11 +40,11 @@ Open your browser to visit the [homepage] and follow the instructions there:
 [Twitter Bootstrap] - great UI boilerplate for modern web apps
 
 [node.js] - evented I/O for the backend
-	 
+
 [Gulp] - the streaming build system
-	 
+
 [karma] - to automate testing
-	 
+
 [jasmine] - for writing the tests
 
 ### How to setup the project/Installation/Configuration
