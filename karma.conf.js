@@ -36,6 +36,15 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'spec', 'coverage', 'coveralls', 'verbose'],
 
+    coverageReporter: {
+      // specify a common output directory
+      // dir: 'build/reports/coverage',
+      reporters: [
+        { type: 'lcov', subdir: 'report-lcov' },
+        { type: 'lcovonly', subdir: '.', file: 'report-lcovonly.txt' }
+      ]
+    },
+
 
     // web server port
     port: 9876,
