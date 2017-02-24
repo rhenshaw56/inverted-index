@@ -28,6 +28,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      './src/inverted-index-app/InvertedIndex.js': ['coverage']
     },
 
 
@@ -36,14 +37,19 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'spec', 'coverage', 'coveralls', 'verbose'],
 
+
     coverageReporter: {
-      // specify a common output directory
-      // dir: 'build/reports/coverage',
-      reporters: [
-        { type: 'lcov', subdir: 'report-lcov' },
-        { type: 'lcovonly', subdir: '.', file: 'report-lcovonly.txt' }
-      ]
+      type: 'lcov',
+      dir: 'coverage/'
     },
+    // coverageReporter: {
+    //   // specify a common output directory
+    //   // dir: 'build/reports/coverage',
+    //   reporters: [
+    //     { type: 'lcov', subdir: 'report-lcov' },
+    //     { type: 'lcovonly', subdir: '.', file: 'report-lcovonly.txt' }
+    //   ]
+    // },
 
 
     // web server port
