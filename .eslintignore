@@ -1,5 +1,8 @@
 ./node_modules/*
 ./jasmine/*
 ./coverage/*
+karam.conf.js
+./jasmine/*
+./coverage/*
 
 
