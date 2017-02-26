@@ -66,17 +66,17 @@ describe('Inverted Index Test', () => {
       expect(invertedIndex.buildIndex(data)).toBe('Index Built');
     });
   });
-  describe('Return an object for a given search parameters', () => {
+  describe('Return an array for a given search parameters', () => {
     it(`should take in a word and an indexed book and
      return matches for that word`, () => {
       const newData = [{ title: 'Jane the virgin', text: 'rowland in' }];
       invertedIndex.buildIndex(newData);
-      expect(invertedIndex.searchIndex('the')).toEqual({ the:
-        ['Jane the virgin'] });
+      expect(invertedIndex.searchIndex('the')).toEqual(
+        ['Jane the virgin']);
       invertedIndex.buildIndex(mockData);
       expect(invertedIndex.searchIndex('the'))
-      .toEqual({ the: ['Jane the virgin',
-        'The Lord of the Rings: The Fellowship of the Ring.'] });
+      .toEqual(['Jane the virgin',
+        'The Lord of the Rings: The Fellowship of the Ring.']);
     });
   });
 });
