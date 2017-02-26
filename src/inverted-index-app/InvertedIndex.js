@@ -10,6 +10,7 @@ class InvertedIndex {
 */
   constructor() {
     this.mainIndex = {};
+    this.bookNames = [];
   }
 
 /**
@@ -40,6 +41,7 @@ class InvertedIndex {
   getBookAsText(book) {
     const status = this.validateInput([book]);
     if (status) {
+      this.bookNames.push(book.title);
       return `${book.title} ${book.text}`;
     }
     return status;
@@ -109,11 +111,11 @@ class InvertedIndex {
  *
  * Takes in word(s) and returns found results based on created index
  * @param {String} searchedWords - Word(s) used to initiate a search
- * @returns {Array} searchResult[searchedWord] - An array of matched books
+ * @returns {Array} searchResult - An array of matched books
  * @memberOf InvertedIndex
 */
   searchIndex(searchedWords) {
-    const searchResult = {};
+    let searchResult = [];
     let output = '';
     const wordsToSearch = this.returnUniqueWords(this
        .generateToken(searchedWords));
@@ -122,7 +124,7 @@ class InvertedIndex {
       indexedWords.forEach((indexedWord) => {
         if (searchedWord === indexedWord) {
           output = this.mainIndex[indexedWord];
-          searchResult[searchedWord] = output;
+          searchResult = output;
         }
       });
     });
