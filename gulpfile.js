@@ -3,7 +3,6 @@ const browserSync = require('browser-sync').create();
 const Server = require('karma').Server;
 const path = require('path');
 
-
 // TASK TO START BROWSER-SYNC SERVER
 
 gulp.task('browserSync', () => {
@@ -31,3 +30,4 @@ gulp.task('test', (done) => {
     singleRun: true
   }, done).start();
 });
+
