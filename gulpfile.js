@@ -11,9 +11,9 @@ gulp.task('browserSync', () => {
       baseDir: './src/',
       // index: 'index.html'
     },
-    port: process.env.PORT || 5600;
+    port: process.env.PORT || 5600,
     open: false,
-    ghostMode: flase,
+    ghostMode: false
   });
 });
 
