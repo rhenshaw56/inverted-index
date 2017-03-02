@@ -14,8 +14,8 @@ const mockData = [
 
 
 describe('Inverted Index Test', () => {
-  describe('It Validate Book Data', () => {
-    it('should return invalid file type if book is not an array of objects',
+  describe('It Validates Book Data', () => {
+    it('should return validation status for the input file',
      () => {
        expect(invertedIndex.validateInput('rowland')).toBe(false);
        expect(invertedIndex.validateInput(2)).toBe(false);
@@ -33,11 +33,16 @@ describe('Inverted Index Test', () => {
      () => {
        const data = { title: 'Alice in wonderland',
          text: 'how did she get there abeg ?' };
-       expect(invertedIndex.getBookAsText(data))
+       expect(invertedIndex.getBookText(data))
        .toBe('Alice in wonderland how did she get there abeg ?');
-       expect(invertedIndex.getBookAsText([{ sex: 'male', age: 18 }]))
+     });
+  });
+  describe('Does not return a concatenated string', () => {
+    it('for invalid book inputs',
+     () => {
+       expect(invertedIndex.getBookText([{ sex: 'male', age: 18 }]))
        .toBe(false);
-       expect(invertedIndex.getBookAsText({ title: 'rage of, angels',
+       expect(invertedIndex.getBookText({ title: 'rage of, angels',
          type: [1, 2, 3] })).toBe(false);
      });
   });
@@ -52,9 +57,9 @@ describe('Inverted Index Test', () => {
    });
   describe('Returns an array of non-repeting strings', () => {
     it('should return an array of unique strings', () => {
-      expect(invertedIndex.returnUniqueWords(['alice',
+      expect(invertedIndex.createUniqueWords(['alice',
         'alice'])).toEqual(['alice']);
-      expect(invertedIndex.returnUniqueWords(['alice', 'alice',
+      expect(invertedIndex.createUniqueWords(['alice', 'alice',
         'boy', 'girl', 'child', 'boy'])).toEqual(['alice',
           'boy', 'girl', 'child']);
     });
