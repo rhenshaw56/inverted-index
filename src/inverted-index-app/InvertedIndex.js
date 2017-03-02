@@ -94,8 +94,8 @@ class InvertedIndex {
 
 /**
  * Takes a word and a book title and stores it in tne mainindex
- * @param {any} word
- * @param {any} bookTitle
+ * @param {String} word
+ * @param {String} bookTitle
  * @returns {none} ...
  * @memberOf InvertedIndex
  */
