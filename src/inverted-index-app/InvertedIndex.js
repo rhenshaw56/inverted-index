@@ -13,20 +13,20 @@ class InvertedIndex {
     this.bookNames = [];
   }
 /**
- * Gets a book and returns it as as a concatenated text
- * @param {Object} book - a book object with title and text property
- * @returns {String} text- returns boolean if conditions are not met
+ * Gets a book and returns it's text property
+ * @param {Object}  - a book object with title and text property
+ * @returns {string, boolean} - returns boolean
+ *  or string depending on if data is valid
  * @memberOf InvertedIndex
  */
   getBookText(book) {
     const status = InvertedIndexUtility.validateInput([book]);
     if (status) {
       this.bookNames.push(book.title);
-      return `${book.title} ${book.text}`;
+      return book.text;
     }
     return status;
   }
-
 /**
  * Builds an index for a Book Objects
  * @param {Array} books - An Array of book objects
@@ -34,20 +34,22 @@ class InvertedIndex {
  * @memberOf InvertedIndex
  */
   buildIndex(books) {
-    let nonUniqueWords = '';
-    let words = '';
-    books.forEach((book) => {
-      nonUniqueWords = InvertedIndexUtility
-      .generateToken(this.getBookText(book));
-      words = InvertedIndexUtility.createUniqueWords(nonUniqueWords);
-      words.forEach((word) => {
-        this.addWordToMainIndex(word, book.title);
+    try {
+      let nonUniqueWords = '';
+      let words = '';
+      books.forEach((book) => {
+        nonUniqueWords = InvertedIndexUtility
+        .generateToken(this.getBookText(book));
+        words = InvertedIndexUtility.createUniqueWords(nonUniqueWords);
+        words.forEach((word) => {
+          this.addWordToMainIndex(word, book.title);
+        });
       });
-    });
-    return 'Index Built';
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
-
-
 /**
  * Takes a word and a book title and stores it in tne mainIndex
  * @param {String} word
@@ -62,9 +64,7 @@ class InvertedIndex {
       this.mainIndex[word] = [bookTitle];
     }
   }
-
 /**
- *
  * Takes in word(s) and returns found results based on created index
  * @param {String} searchedWords - Word(s) used to initiate a search
  * @returns {Array} searchResult - An array of matched books
@@ -72,7 +72,7 @@ class InvertedIndex {
 */
   searchIndex(searchedWords) {
     let searchResult = [];
-    let output = '';
+    // let output = '';
     const wordsToSearch = InvertedIndexUtility
     .createUniqueWords(InvertedIndexUtility
        .generateToken(searchedWords));
@@ -80,9 +80,7 @@ class InvertedIndex {
       const indexedWords = Object.keys(this.mainIndex);
       indexedWords.forEach((indexedWord) => {
         if (searchedWord === indexedWord) {
-          output = this.mainIndex[indexedWord];
-          searchResult = output;
-          console.log(indexedWord + ' ' + searchResult);
+          searchResult = this.mainIndex[indexedWord];
         }
       });
     });

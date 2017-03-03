@@ -10,22 +10,24 @@ class InvertedIndexUtility {
  * @returns {boolean} true/false - returns validation status.
  * @memberOf InvertedIndex
  */
-  static validateInput(book) {
-    if (Array.isArray(book) && book.length > 0 && typeof book[0] === 'object') {
-      if (book[0].text && book[0].title) {
-        if (typeof (book[0].text) === 'number') {
-          return false;
+  static validateInput(file) {
+    if (Array.isArray(file) && file.length) {
+      const books = Object.keys(file);
+      for (let i = 0; i < books.length; i++) {
+        if (file[i].text && file[i].title) {
+          return true;
         }
-        return true;
+        return false;
       }
+    } else {
+      return false;
     }
-    return false;
   }
 
 /**
 * Removes characters, whitespaces and converts text to array elements.
 * @param {String} text returned from getBookAsText
-* @returns {Array} -returns an array of words in lower-cases with no characters
+* @returns {Array} -returns words in lower-cases with no characters
 * @memberOf InvertedIndexUtility
 */
   static generateToken(text) {
