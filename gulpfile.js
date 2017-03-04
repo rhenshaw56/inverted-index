@@ -2,6 +2,8 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const Server = require('karma').Server;
 const path = require('path');
+const browserify = require('gulp-browserify');
+const rename = require('gulp-rename');
 
 // TASK TO START BROWSER-SYNC SERVER
 
@@ -10,7 +12,10 @@ gulp.task('browserSync', () => {
     server: {
       baseDir: './src/',
       // index: 'index.html'
-    }
+    },
+    port: process.env.PORT || 5600,
+    open: false,
+    ghostMode: false
   });
 });
 
@@ -24,10 +29,17 @@ gulp.task('default', ['browserSync'], () => {
 
 // TASK TO RUN TESTS
 
-gulp.task('test', (done) => {
+gulp.task('test', ['bundle'], (done) => {
   new Server({
     configFile: path.join(__dirname, 'karma.conf.js'),
     singleRun: true
   }, done).start();
+});
+
+gulp.task('bundle', () => {
+  gulp.src('jasmine/spec/inverted-index-spec.js')
+   .pipe(browserify())
+   .pipe(rename('bundles.js'))
+   .pipe(gulp.dest('jasmine/bundles'));
 });
 
