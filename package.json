@@ -4,8 +4,7 @@
   "description": "this app builds index from texts in a .json file and allows you search through the file for words in that text.",
   "scripts": {
     "start": "gulp",
-    "test": "./node_modules/.bin/karma start karma.conf.js",
-    "bundle": "gulp bundle"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",

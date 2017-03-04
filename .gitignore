@@ -4,3 +4,4 @@ npm0debug.log
 coverage
 .eslintrc
 jasmine/.DS_Store
+jasmine/bundles

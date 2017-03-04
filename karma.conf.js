@@ -15,10 +15,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // './jasmine/spec/data.js',
       './src/inverted-index-app/InvertedIndexUtility.js',
       './src/inverted-index-app/InvertedIndex.js',
-      // './jasmine/spec/inverted-index-spec.js',
       'jasmine/bundles/bundles.js'
 
     ],
@@ -28,9 +26,6 @@ module.exports = function(config) {
     exclude: [
     ],
 
-    proxies: {
-      './jasmine/spec/': './jasmine/spec/',
-    },
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
