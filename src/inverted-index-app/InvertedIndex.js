@@ -13,7 +13,7 @@ class InvertedIndex {
   }
 /**
  * Gets a book and returns it's text property
- * @param {Object}  - a book object with title and text property
+ * @param {Object} book - a book object with title and text property
  * @returns {String} or {boolean} - returns boolean
  *  or string depending on if data is valid
  * @memberOf InvertedIndex
@@ -26,6 +26,7 @@ class InvertedIndex {
     }
     return status;
   }
+
 /**
  * Builds an index for a Book Objects
  * @param {Array} books - An Array of book objects

@@ -1,19 +1,18 @@
 /**
- *
- *
+ * Utility class for InvertedIndex class
  * @class InvertedIndexUtility
  */
 class InvertedIndexUtility {
 /**
  * Checks input to see if it conforms to specific standards.
- * @param {Array} book - Book file to be validated
+ * @param {Array} file - Book file to be validated
  * @returns {boolean} true/false - returns validation status.
  * @memberOf InvertedIndex
  */
   static validateInput(file) {
     if (Array.isArray(file) && file.length) {
       const books = Object.keys(file);
-      for (let i = 0; i < books.length; i++) {
+      for (let i = 0; i < books.length; i += 1) {
         if (file[i].text && file[i].title) {
           return true;
         }
@@ -37,15 +36,13 @@ class InvertedIndexUtility {
   }
 
 /**
- * Gets an array of Words and makes element have unique occurrences
+ * Gets an array of words and makes element have unique occurrences
  * @param {Object} words - a book object with title and text property
- * @returns {Array} Words - a filtered array with unique elements
+ * @returns {Array} words - a filtered array with unique elements
  * @memberOf InvertedIndexUtility
  */
   static createUniqueWords(words) {
     return words.filter((element, index) =>
         words.indexOf(element) === index);
   }
-
-
 }
