@@ -37,7 +37,7 @@ gulp.task('test', (done) => {
 });
 
 gulp.task('bundle', () => {
-  gulp.src('jasmine/spec/inverted-index-spec.js')
+  gulp.src('jasmine/spec/inverted-index.spec.js')
    .pipe(browserify())
    .pipe(rename('bundles.js'))
    .pipe(gulp.dest('jasmine/bundles'));
