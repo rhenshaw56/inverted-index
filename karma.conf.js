@@ -15,10 +15,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './jasmine/spec/data.js',
+      // './jasmine/spec/data.js',
       './src/inverted-index-app/InvertedIndexUtility.js',
       './src/inverted-index-app/InvertedIndex.js',
-      './jasmine/spec/inverted-index-spec.js'
+      // './jasmine/spec/inverted-index-spec.js',
+      'jasmine/bundles/bundles.js'
 
     ],
 

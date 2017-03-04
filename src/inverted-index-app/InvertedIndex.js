@@ -1,6 +1,5 @@
 /**
- *
- *
+ *Class for creating an inverted index.
  * @class InvertedIndex
  */
 class InvertedIndex {
@@ -15,7 +14,7 @@ class InvertedIndex {
 /**
  * Gets a book and returns it's text property
  * @param {Object}  - a book object with title and text property
- * @returns {string, boolean} - returns boolean
+ * @returns {String} or {boolean} - returns boolean
  *  or string depending on if data is valid
  * @memberOf InvertedIndex
  */

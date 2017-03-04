@@ -1,3 +1,10 @@
+const emptyBook = require('./empty-book..json');
+const badBookOne = require('./bad-book-one.json');
+const badData = require('./bad-book-two.json');
+const badArray = require('./badArray.json');
+const validBooks = require('./valid-books.json');
+const data = require('./data.json');
+
 const invertedIndex = new InvertedIndex();
 
 
@@ -12,16 +19,17 @@ describe('UTILITY CLASS TESTS', () => {
       expect(InvertedIndexUtility.validateInput(validBooks)).toBe(true);
     });
   });
-  describe('GENERATES A TOKEN', () => {
-     it('should return a string all in lower cases', () => {
-       expect(InvertedIndexUtility.generateToken('ABCDRFGHIJKL'))
+  describe('GENERATES TOKEN', () => {
+    it('should return a string all in lower cases', () => {
+      expect(InvertedIndexUtility.generateToken('ABCDRFGHIJKL'))
        .toEqual(['abcdrfghijkl']);
-     });
-     it('should return a string void of ambiguous characters', () => {
-       expect(InvertedIndexUtility.generateToken('.../i. am?! , n$o#t o"k[a]+y'))
+    });
+    it('should return a string void of ambiguous characters', () => {
+      expect(InvertedIndexUtility
+       .generateToken('.../i. am?! , n$o#t o"k[a]+y'))
        .toEqual(['i', 'am', 'not', 'okay']);
-     });
-   });
+    });
+  });
   describe('CREATES UNIQUE WORDS', () => {
     it(`should return an array of unique words
      when it encounters multiple occurrences of a particular word`, () => {
@@ -38,7 +46,7 @@ describe('INVERTED-INDEX CLASS TESTS', () => {
     it(`should return the book text when given a
     valid book as input`, () => {
       expect(invertedIndex.getBookText(data))
-       .toBe('how did she get there abeg ?');
+       .toBe('how did she get there abeg?');
     });
     it(`should return false for the book text when given an
    invalid book as input`, () => {
@@ -51,7 +59,7 @@ describe('INVERTED-INDEX CLASS TESTS', () => {
       expect(invertedIndex.buildIndex(validBooks)).toBe(true);
     });
     it('should return false when building index for invalid data', () => {
-      expect(invertedIndex.buildIndex(badBookTwo)).toBe(false);
+      expect(invertedIndex.buildIndex(badData)).toBe(false);
     });
     it('should return false when building index for an invalid type', () => {
       expect(invertedIndex.buildIndex(badArray)).toBe(false);
