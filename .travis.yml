@@ -4,7 +4,7 @@ language: node_js
 
 node_js:
   - 6
-
+before_script: ./node_modules/.bin/gulp bundle
 script: npm test
 
 after_script:

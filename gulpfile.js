@@ -21,7 +21,7 @@ gulp.task('browserSync', () => {
 
 // TASK TO START APP AND WATCH FOR CHANGES
 
-gulp.task('default', ['browserSync'], () => {
+gulp.task('default', ['browserSync', 'test'], () => {
   gulp.watch('./src/app/index.html').on('change', browserSync.reload);
   gulp.watch('./src/app/index.js').on('change', browserSync.reload);
   gulp.watch('./src/app/css/style.css').on('change', browserSync.reload);
@@ -29,7 +29,7 @@ gulp.task('default', ['browserSync'], () => {
 
 // TASK TO RUN TESTS
 
-gulp.task('test', ['bundle'], (done) => {
+gulp.task('test', (done) => {
   new Server({
     configFile: path.join(__dirname, 'karma.conf.js'),
     singleRun: true
