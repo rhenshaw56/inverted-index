@@ -21,7 +21,7 @@ gulp.task('browserSync', () => {
 
 // TASK TO START APP AND WATCH FOR CHANGES
 
-gulp.task('default', ['browserSync', 'test'], () => {
+gulp.task('default', ['browserSync'], () => {
   gulp.watch('./src/app/index.html').on('change', browserSync.reload);
   gulp.watch('./src/app/index.js').on('change', browserSync.reload);
   gulp.watch('./src/app/css/style.css').on('change', browserSync.reload);

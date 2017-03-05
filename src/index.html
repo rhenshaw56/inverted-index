@@ -24,15 +24,16 @@
                     </ul>
                 </div>
                 <br></br>
-                <select ng-model="selectedFile" ng-options="file.name for file in bookList">
+                <select ng-model="selectedFile" ng-options="file.name for file in fileList">
                     <option value="" selected="selected">Select a Book File</option>
                 </select>
                 <!-- <button class= "btn" id ="btnUpload" onclick = "getFile()">upload</button> -->
                 <input class="btn" id="bookFile" accept=".json" style="display: none" type="file" multiple>
                 <label class="btn" for="bookFile">upload</label>
-                <button class="btn" id="btnCreateBook" onclick="switchDiv('create-book-div', 'upload-div')">Create book</button>   <button class="btn" type="button" ng-click="buildIndex(selectedFile)">Create Index</button>
-                <button class="btn" id="btnSearch" onclick="switchDiv('search-div', 'upload-div', 'main-index-table')">Search</button>
-                <button class="btn" onclick="showLibrary()" type="button">Index Library</button>
+                <button class="btn" id="btnCreateBook" onclick="switchDiv('create-book-div', 'upload-div')">Create book</button>
+                <button class="btn" type="button" ng-click="showIndexTable(selectedFile)">View Index</button>
+                <button class="btn" id="btnSearch" onclick="switchDiv('search-div', 'upload-div')">Search</button>
+                <!--<button class="btn" ng-click="showAllIndexes()" type="button">Index Library</button>-->
 
                 <br></br>
                 <p class="warning">{{buildMessage}}</p>
@@ -40,34 +41,34 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>{{words}}</th>
-                                <th ng-repeat ="(key_1, value_1) in bookNames">{{value_1}}</th>
+                                <th>Words</th>
+                                <th ng-repeat ="value_1 in bookList">{{value_1}}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(key_2, value_2) in newIndex">
+                            <tr ng-repeat="(key_2, value_2) in currentIndex">
                                 <td>{{key_2}}</td>
-                                <td ng-repeat ="(key, value) in bookNames">{{value_2.indexOf(value) !== -1 ? 'X':''}}</td>
+                                <td ng-repeat ="value in bookList">{{value_2.indexOf(value) !== -1 ? 'X':''}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div id = "mainIndex-table" style="display: none">
+                <!--<div id = "mainIndex-table">
                     <table>
                         <thead>
                             <tr>
-                                <th class="words" ></th>
-                                <th ng-repeat ="(mkey_1, mvalue_1) in library">{{mvalue_1}}</th>
+                                <th ng-model>Words</th>
+                                <th ng-repeat ="mvalue_1 in library">{{mvalue_1}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="(mkey_2, mvalue_2) in mainIndex">
                                 <td>{{mkey_2}}</td>
-                                <td ng-repeat="(mkey, mval) in library">{{mvalue_2.indexOf(mval) !== -1 ? 'X':''}}</td>
+                                <td ng-repeat="mval in library">{{mvalue_2.indexOf(mval) !== -1 ? 'X':''}}</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div>-->
             </div>
             <div id="create-book-div" style="display:none;">
                 <p>create a new book here</p>
@@ -91,28 +92,28 @@
 
             <div id="search-div" style="display:none">
                 <p>Select a file to search in or Search in all books</p>
-                <select ng-model="selectedFile" ng-options="file.name for file in bookList">
-                    <option value="" selected="selected">Select a Book File</option>
+                <select id="search-select" placeholder="select a book to search in" ng-model="selectedBook" ng-options="file.name for file in fileList">
+                    <option value="" selected="selected">Search in all Books</option>
                 </select>
                 <br></br>
                 <input id= "search-text" type= "text" placeholder= "Enter word(s) to initiate search" ng-model = "query"/>
             
-                <button id= "search-btn" class= "btn" id= "btnSearch" ng-click= "search(query)" >Search</button>
+                <button id= "search-btn" class= "btn" id= "btnSearch" ng-click= "search(query, selectedBook )" >Search</button>
                 <button class= "btn" id ="btnUpload" onclick = "switchDiv('upload-div', 'search-div')">Back</button>
                 <div class="clear"></div>
                 <p ng-model="badMessage"></p>
-                <div id = "search-result-table">
+                <div id = "search-table" style="display: none">
                     <table>
                         <thead>
                             <tr>
                                 <th class="words" ></th>
-                                <th ng-repeat ="(mkey_1, mvalue_1) in library">{{mvalue_1}}</th>
+                                <th ng-repeat ="(mkey_1, mvalue_1) in headers">{{mvalue_1}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="(mkey_2, mvalue_2) in searchResult">
                                 <td>{{mkey_2}}</td>
-                                <td ng-repeat="(mkey, mval) in library">{{mvalue_2.indexOf(mval) !== -1 ? 'X':''}}</td>
+                                <td ng-repeat="(mkey, mval) in headers">{{mvalue_2.indexOf(mval) !== -1 ? 'XX':''}}</td>
                             </tr>
                         </tbody>
                     </table>

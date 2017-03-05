@@ -13,7 +13,7 @@ class InvertedIndexUtility {
  * @memberOf InvertedIndex
  */
   static validateInput(file) {
-    if (Array.isArray(file) && file.length) {
+    if (Array.isArray(file) && file.length > 0) {
       const books = Object.keys(file);
       for (let i = 0; i < books.length; i += 1) {
         if (file[i].text && file[i].title) {

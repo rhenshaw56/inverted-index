@@ -2,25 +2,26 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
     .controller('BookController', ['$scope', ($scope) => {
       $scope.invertedIndex = new InvertedIndex();
       $scope.register = [];
-      $scope.bookList = [];
+      $scope.fileList = [];
       $scope.indexRegister = [];
       $scope.bookNames = [];
+      $scope.booksInFiles = {};
       $scope.library = [];
       $scope.mainIndex = {};
-      $scope.searchResult = {};
+      $scope.bookIndex = {};
+      // $scope.searchResult = {};
       $scope.buildMessage = '';
 
 
       $scope.uploadBooks = (bookFile) => {
-        const books = Array.from(bookFile.target.files);
-        books.forEach((book) => {
+        const files = Array.from(bookFile.target.files);
+        files.forEach((file) => {
           $scope.$apply(() => {
-            if (book.type === 'application/json' &&
-             $scope.register.indexOf(book.name) === -1) {
-              $scope.register.push(book.name);
-              $scope.bookList.push(book);
-              $scope.uploadStatus = true;
-              $scope.message = 'Upload successful';
+            if (file.type === 'application/json' &&
+             $scope.register.indexOf(file.name) === -1) {
+              $scope.register.push(file.name);
+              $scope.fileList.push(file);
+              $scope.readBook(file, file.name);
             } else {
               $scope.badMessage = `This file is
               not a JSON file or It is already uploaded!`;
@@ -30,54 +31,111 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
         return status;
       };
 
-      $scope.buildIndex = (file) => {
+      $scope.readBook = (file, fileName) => {
         if (!file) {
-          $scope.buildMessage = 'Select a file to generate an index';
-        } else if ($scope.indexRegister.indexOf(file.name) !== -1) {
-          $scope.buildMessage = 'Book already has index';
+          $scope.readMessage = 'Select a file to generate an index';
         } else {
           const reader = new FileReader();
           reader.readAsText(file);
-          let newbook = {};
-          const index = new InvertedIndex();
+          let newBook = {};
           reader.onload = (e) => {
             try {
-              newbook = JSON.parse(e.target.result);
-              index.buildIndex(newbook);
-              $scope.invertedIndex.buildIndex(newbook);
-              $scope.indexRegister.push(file.name);
-              $scope.mainIndex = $scope.invertedIndex.mainIndex;
-              $scope.newIndex = index.mainIndex;
-              $scope.bookNames = index.bookNames;
-              $scope.library = $scope.invertedIndex.bookNames;
-              $scope.buildStatus = true;
-              $scope.words = 'Words';
+              newBook = JSON.parse(e.target.result);
             } catch (err) {
-              $scope.buildMessage = 'File is Invalid';
+              $scope.buildMessage = 'Could not read Invalid File';
             }
-            document.getElementById('index-table').style.display = 'block';
+            $scope.buildIndex(newBook, fileName);
           };
         }
       };
 
-      $scope.search = (query) => {
-        if (!query) {
-          $scope.badMessage = 'Enter a word to search';
-        } else {
-          const words = query.split(' ');
-          words.forEach((word) => {
-            if ($scope.buildStatus) {
-              $scope.searchResult[word] = $scope.invertedIndex
-              .searchIndex(word);
-            } else {
-              $scope.badMessage = `Index not
-              Created yet! Create Index to begin`;
-            }
-          });
+      $scope.buildIndex = (book, fileName) => {
+        if (InvertedIndexUtility.validateInput(book)) {
+          const index = new InvertedIndex();
+          index.buildIndex(book);
+          $scope.buildMessage = `Index Built for ${fileName}`;
+          $scope.invertedIndex.buildIndex(book);
+          $scope.mainIndex = $scope.invertedIndex.mainIndex;
+          const mainIndex = index.mainIndex;
+          $scope.addToIndexList(mainIndex, fileName);
+          $scope.booksInFiles[fileName] = index.bookNames;
+          $scope.addBookNameToLibrary(index.bookNames);
         }
       };
 
+      $scope.addToIndexList = (indexedFile, fileName) => {
+        $scope.bookIndex[fileName] = indexedFile;
+      };
 
+      $scope.showIndexTable = (file) => {
+        try {
+          if ($scope.bookIndex[file.name]) {
+            $scope.currentIndex = $scope.bookIndex[file.name];
+            $scope.bookList = $scope.booksInFiles[file.name];
+            $scope.buildMessage = '';
+            // document.getElementById('mainIndex-table').style.display = 'none';
+            document.getElementById('index-table').style.display = 'block';
+          } else {
+            throw 'File is Invalid!';
+          }
+        } catch (err) {
+          $scope.buildMessage = 'Please select a book to view its Index';
+        }
+      };
+      // $scope.showAllIndexes = () => {
+      //   $scope.buildMessage = '';
+      //   document.getElementById('index-table').style.display = 'none';
+      //   document.getElementById('mainIndex-table').style.display = 'block';
+      //   $scope.words = 'Words';
+      // };
+
+      $scope.addBookNameToLibrary = (bookNames) => {
+        bookNames.forEach((name) => {
+          $scope.library.push(name);
+        });
+      };
+
+      $scope.search = (query, file) => {
+        $scope.searchResult = {};
+        try {
+          $scope.buildMessage = '';
+          const words = query.split(' ');
+          if (!query) {
+            $scope.badMessage = 'Please Enter Some word(s) to initiate search';
+          } else if (file === undefined) {
+            $scope.searchResult = $scope.searchInAll(words);
+            $scope.headers = $scope.library;
+          } else if (file !== undefined) {
+            $scope.searchResult = $scope.searchInFile(words, file.name);
+            $scope.headers = $scope.booksInFiles[file.name];
+          }
+          document.getElementById('search-table').style.display = 'block';
+        } catch (err) {
+          $scope.badMessage = 'Book Changed! Enter A new Word!';
+        }
+      };
+
+      $scope.searchInAll = (words) => {
+        const result = {};
+        words.forEach((word) => {
+          result[word] = $scope.invertedIndex.searchIndex(word);
+        });
+        return result;
+      };
+
+      $scope.searchInFile = (words, fileName) => {
+        const result = {};
+        const output = {};
+        if ($scope.bookIndex[fileName]) {
+          output[fileName] = $scope.bookIndex[fileName];
+          words.forEach((word) => {
+            result[word] = output[fileName][word] || [];
+          });
+          return result;
+        }
+      };
+      document.getElementById('search-select')
+      .addEventListener('change', $scope.search);
       document.getElementById('bookFile')
       .addEventListener('change', $scope.uploadBooks);
     }]);
