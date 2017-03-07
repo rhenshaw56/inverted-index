@@ -14,7 +14,6 @@ class InvertedIndex {
     this.mainIndex = {};
     this.bookNames = [];
     this.fileIndex = {};
-    var InvertedIndexUtility = require('./InvertedIndexUtility.js');
   }
 
 /**
@@ -56,11 +55,10 @@ class InvertedIndex {
         });
         const mainIndex = this.mainIndex;
         this.addIndexToFileIndex(fileName, mainIndex);
-        return true;
       });
+      return true;
     } catch (e) {
-      // return false;
-      return e;
+      return false;
     }
   }
 /**
@@ -72,7 +70,7 @@ class InvertedIndex {
  */
   addIndexToFileIndex(fileName, indexedFile) {
     if (this.fileIndex[fileName]) {
-      this.fileIndex[file] = indexedFile;
+      this.fileIndex[fileName] = indexedFile;
     } else {
       this.fileIndex[fileName] = indexedFile;
     }
@@ -108,12 +106,3 @@ class InvertedIndex {
     return searchResult;
   }
 }
-
-const data = [{
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  }];
-
-const iv = new InvertedIndex();
-console.log(iv.buildIndex(data));
-console.log(iv.mainIndex);
