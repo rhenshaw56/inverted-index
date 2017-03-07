@@ -15,15 +15,17 @@ class InvertedIndexUtility {
   static validateInput(file) {
     if (Array.isArray(file) && file.length > 0) {
       const books = Object.keys(file);
-      for (let i = 0; i < books.length; i += 1) {
+      for (let i = 0; i < books.length;) {
         if (file[i].text && file[i].title) {
-          return true;
+          i += 1;
+        } else {
+          return false;
         }
-        return false;
       }
     } else {
       return false;
     }
+    return true;
   }
 
 /**
@@ -49,4 +51,4 @@ class InvertedIndexUtility {
         words.indexOf(element) === index);
   }
 }
-module.exports = InvertedIndexUtility;
+
