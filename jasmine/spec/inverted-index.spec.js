@@ -60,6 +60,7 @@ describe('INVERTED-INDEX CLASS TESTS', () => {
   describe('BUILDS INDEX', () => {
     it('should return true when building index for  valid data', () => {
       expect(invertedIndex.buildIndex(validBooks)).toBe(true);
+      console.log(invertedIndex.mainIndex());
     });
     it('should return false when building index for invalid data', () => {
       expect(invertedIndex.buildIndex(badData)).toBe(false);

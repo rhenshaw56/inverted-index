@@ -13,7 +13,10 @@ class InvertedIndex {
   constructor() {
     this.mainIndex = {};
     this.bookNames = [];
+    this.fileIndex = {};
+    var InvertedIndexUtility = require('./InvertedIndexUtility.js');
   }
+
 /**
  * Gets a book and returns it's text property
  * @param {Object} book - a book object with title and text property
@@ -36,56 +39,81 @@ class InvertedIndex {
  * @returns {Boolean} Build status as a feedback message
  * @memberOf InvertedIndex
  */
-  buildIndex(books) {
+  buildIndex(books, fileName) {
     try {
       let nonUniqueWords = '';
       let words = '';
       books.forEach((book) => {
         nonUniqueWords = InvertedIndexUtility
-        .generateToken(this.getBookText(book));
+          .generateToken(this.getBookText(book));
         words = InvertedIndexUtility.createUniqueWords(nonUniqueWords);
         words.forEach((word) => {
-          this.addWordToMainIndex(word, book.title);
+          if (this.mainIndex[word]) {
+            this.mainIndex[word].push(book.title);
+          } else {
+            this.mainIndex[word] = [book.title];
+          }
         });
+        const mainIndex = this.mainIndex;
+        this.addIndexToFileIndex(fileName, mainIndex);
+        return true;
       });
-      return true;
     } catch (e) {
-      return false;
+      // return false;
+      return e;
     }
   }
 /**
- * Takes a word and a book title and stores it in tne mainIndex
- * @param {String} word
- * @param {String} bookTitle
+ * Takes a file name and an indexed book and stores it in tne fileIndex
+ * @param {String} fileName - name of the input json file
+ * @param {Object} indexedFile - index created for json file
  * @returns {none} ...
  * @memberOf InvertedIndex
  */
-  addWordToMainIndex(word, bookTitle) {
-    if (this.mainIndex[word]) {
-      this.mainIndex[word].push(bookTitle);
+  addIndexToFileIndex(fileName, indexedFile) {
+    if (this.fileIndex[fileName]) {
+      this.fileIndex[file] = indexedFile;
     } else {
-      this.mainIndex[word] = [bookTitle];
+      this.fileIndex[fileName] = indexedFile;
     }
   }
 /**
  * Takes in word(s) and returns found results based on created index
  * @param {String} searchedWords - Word(s) used to initiate a search
+ * @param {String} fileName - name of the search file
  * @returns {Array} searchResult - An array of matched books
  * @memberOf InvertedIndex
 */
-  searchIndex(searchedWords) {
+  searchIndex(searchedWords, fileName) {
     let searchResult = [];
+    const output = {};
     const wordsToSearch = InvertedIndexUtility
     .createUniqueWords(InvertedIndexUtility
        .generateToken(searchedWords));
-    wordsToSearch.forEach((searchedWord) => {
-      const indexedWords = Object.keys(this.mainIndex);
-      indexedWords.forEach((indexedWord) => {
-        if (searchedWord === indexedWord) {
-          searchResult = this.mainIndex[indexedWord];
-        }
+    if (!fileName) {
+      wordsToSearch.forEach((searchedWord) => {
+        const indexedWords = Object.keys(this.mainIndex);
+        indexedWords.forEach((indexedWord) => {
+          if (searchedWord === indexedWord) {
+            searchResult = this.mainIndex[indexedWord];
+          }
+        });
       });
-    });
+    } else if (this.fileIndex[fileName]) {
+      output[fileName] = this.fileIndex[fileName];
+      wordsToSearch.forEach((word) => {
+        searchResult = output[fileName][word];
+      });
+    }
     return searchResult;
   }
 }
+
+const data = [{
+    "title": "Alice in Wonderland",
+    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+  }];
+
+const iv = new InvertedIndex();
+console.log(iv.buildIndex(data));
+console.log(iv.mainIndex);

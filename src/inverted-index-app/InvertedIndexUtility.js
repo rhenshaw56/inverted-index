@@ -39,8 +39,8 @@ class InvertedIndexUtility {
   }
 
 /**
- * Gets an array of words and makes element have unique occurrences
- * @param {Object} words - a book object with title and text property
+ * Gets an array of words and makes elements have unique occurrences
+ * @param {Array} words - a book object with title and text property
  * @returns {Array} words - a filtered array with unique elements
  * @memberOf InvertedIndexUtility
  */
@@ -49,3 +49,4 @@ class InvertedIndexUtility {
         words.indexOf(element) === index);
   }
 }
+module.exports = InvertedIndexUtility;

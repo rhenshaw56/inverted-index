@@ -51,21 +51,26 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
 
       $scope.buildIndex = (book, fileName) => {
         if (InvertedIndexUtility.validateInput(book)) {
-          const index = new InvertedIndex();
-          index.buildIndex(book);
-          $scope.buildMessage = `Index Built for ${fileName}`;
-          $scope.invertedIndex.buildIndex(book);
-          $scope.mainIndex = $scope.invertedIndex.mainIndex;
-          const mainIndex = index.mainIndex;
-          $scope.addToIndexList(mainIndex, fileName);
-          $scope.booksInFiles[fileName] = index.bookNames;
-          $scope.addBookNameToLibrary(index.bookNames);
+          // const index = new InvertedIndex();
+          // index.buildIndex(book,fileName);
+          // index.buildIndex(book, fileName);
+          // $scope.buildMessage = `Index Built for ${fileName}`;
+          $scope.invertedIndex.buildIndex(book, fileName);
+          // $scope.mainIndex = $scope.invertedIndex.mainIndex;
+          // const mainIndex = index.mainIndex;
+          // $scope.addToIndexList(mainIndex, fileName);
+          // $scope.booksInFiles[fileName] = index.bookNames;
+          // $scope.addBookNameToLibrary(index.bookNames);
+          // console.log(index.mainIndex);
+          console.log($scope.invertedIndex.fileIndex);
+          console.log($scope.invertedIndex.mainIndex);
+          console.log('yeah, i see u');
         }
       };
 
-      $scope.addToIndexList = (indexedFile, fileName) => {
-        $scope.bookIndex[fileName] = indexedFile;
-      };
+      // $scope.addToIndexList = (indexedFile, fileName) => {
+      //   $scope.bookIndex[fileName] = indexedFile;
+      // };
 
       $scope.showIndexTable = (file) => {
         try {
@@ -73,7 +78,6 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
             $scope.currentIndex = $scope.bookIndex[file.name];
             $scope.bookList = $scope.booksInFiles[file.name];
             $scope.buildMessage = '';
-            // document.getElementById('mainIndex-table').style.display = 'none';
             document.getElementById('index-table').style.display = 'block';
           } else {
             throw 'File is Invalid!';
@@ -82,13 +86,6 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
           $scope.buildMessage = 'Please select a book to view its Index';
         }
       };
-      // $scope.showAllIndexes = () => {
-      //   $scope.buildMessage = '';
-      //   document.getElementById('index-table').style.display = 'none';
-      //   document.getElementById('mainIndex-table').style.display = 'block';
-      //   $scope.words = 'Words';
-      // };
-
       $scope.addBookNameToLibrary = (bookNames) => {
         bookNames.forEach((name) => {
           $scope.library.push(name);
