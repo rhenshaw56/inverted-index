@@ -75,34 +75,32 @@ class InvertedIndex {
       this.fileIndex[fileName] = indexedFile;
     }
   }
-/**
- * Takes in word(s) and returns found results based on created index
- * @param {String} searchedWords - Word(s) used to initiate a search
- * @param {String} fileName - name of the search file
- * @returns {Array} searchResult - An array of matched books
- * @memberOf InvertedIndex
-*/
-  searchIndex(searchedWords, fileName) {
+  searchAll(searchedWords) {
     let searchResult = [];
-    const output = {};
     const wordsToSearch = InvertedIndexUtility
     .createUniqueWords(InvertedIndexUtility
-       .generateToken(searchedWords));
-    if (!fileName) {
-      wordsToSearch.forEach((searchedWord) => {
-        const indexedWords = Object.keys(this.mainIndex);
-        indexedWords.forEach((indexedWord) => {
-          if (searchedWord === indexedWord) {
-            searchResult = this.mainIndex[indexedWord];
-          }
-        });
+      .generateToken(searchedWords));
+    const indexedWords = Object.keys(this.mainIndex);
+    wordsToSearch.forEach((searchedWord) => {
+      indexedWords.forEach((indexedWord) => {
+        if (searchedWord === indexedWord) {
+          searchResult = this.mainIndex[indexedWord];
+        }
       });
-    } else if (this.fileIndex[fileName]) {
-      output[fileName] = this.fileIndex[fileName];
-      wordsToSearch.forEach((word) => {
-        searchResult = output[fileName][word];
-      });
-    }
+    });
+    return searchResult;
+  }
+  searchByFile(searchedWords, fileName) {
+    let searchResult = [];
+    const wordsToSearch = InvertedIndexUtility
+    .createUniqueWords(InvertedIndexUtility
+     .generateToken(searchedWords));
+    wordsToSearch.forEach((word) => {
+      const indexedWords = Object.keys(this.fileIndex[fileName]);
+      if (indexedWords.indexOf(word) !== -1){
+        searchResult = this.fileIndex[fileName][word];
+      }
+    });
     return searchResult;
   }
 }
