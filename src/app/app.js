@@ -1,16 +1,13 @@
+/* eslint-disable no-unsed-vars */
+/* eslint-disable no-undef */
+
 const invertedIndexApp = angular.module('invertedIndexApp', [])
     .controller('BookController', ['$scope', ($scope) => {
       $scope.invertedIndex = new InvertedIndex();
       $scope.register = [];
       $scope.fileList = [];
-      $scope.indexRegister = [];
-      $scope.bookNames = [];
-      $scope.booksInFiles = {};
-      $scope.library = [];
+      $scope.bookRegister = {};
       $scope.mainIndex = {};
-      $scope.bookIndex = {};
-      // $scope.searchResult = {};
-      $scope.buildMessage = '';
 
 
       $scope.uploadBooks = (bookFile) => {
@@ -51,45 +48,35 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
 
       $scope.buildIndex = (book, fileName) => {
         if (InvertedIndexUtility.validateInput(book)) {
-          // const index = new InvertedIndex();
-          // index.buildIndex(book,fileName);
-          // index.buildIndex(book, fileName);
-          // $scope.buildMessage = `Index Built for ${fileName}`;
           $scope.invertedIndex.buildIndex(book, fileName);
-          // $scope.mainIndex = $scope.invertedIndex.mainIndex;
-          // const mainIndex = index.mainIndex;
-          // $scope.addToIndexList(mainIndex, fileName);
-          // $scope.booksInFiles[fileName] = index.bookNames;
-          // $scope.addBookNameToLibrary(index.bookNames);
-          // console.log(index.mainIndex);
-          console.log($scope.invertedIndex.fileIndex);
-          console.log($scope.invertedIndex.mainIndex);
-          console.log('yeah, i see u');
+          const index = new InvertedIndex();
+          index.buildIndex(book, fileName);
+          const mainIndex = index.mainIndex;
+          const books = index.bookNames;
+          $scope.addIndexToMainIndex(mainIndex, books, fileName);
+        } else {
+          $scope.fileList.pop(fileName);
+          $scope.register.pop(fileName);
+          $scope.buildMessage = `${fileName} IS NOT VALID!`;
         }
       };
 
-      // $scope.addToIndexList = (indexedFile, fileName) => {
-      //   $scope.bookIndex[fileName] = indexedFile;
-      // };
+      $scope.addIndexToMainIndex = (index, books, fileName) => {
+        $scope.bookRegister[fileName] = books;
+        $scope.mainIndex[fileName] = index;
+      };
 
       $scope.showIndexTable = (file) => {
         try {
-          if ($scope.bookIndex[file.name]) {
-            $scope.currentIndex = $scope.bookIndex[file.name];
-            $scope.bookList = $scope.booksInFiles[file.name];
+          if ($scope.invertedIndex.fileIndex[file.name]) {
+            $scope.currentIndex = $scope.mainIndex[file.name];
+            $scope.bookList = $scope.bookRegister[file.name];
             $scope.buildMessage = '';
             document.getElementById('index-table').style.display = 'block';
-          } else {
-            throw 'File is Invalid!';
           }
         } catch (err) {
           $scope.buildMessage = 'Please select a book to view its Index';
         }
-      };
-      $scope.addBookNameToLibrary = (bookNames) => {
-        bookNames.forEach((name) => {
-          $scope.library.push(name);
-        });
       };
 
       $scope.search = (query, file) => {
@@ -104,7 +91,7 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
             $scope.headers = $scope.library;
           } else if (file !== undefined) {
             $scope.searchResult = $scope.searchInFile(words, file.name);
-            $scope.headers = $scope.booksInFiles[file.name];
+            $scope.headers = $scope.bookRegister[file.name];
           }
           document.getElementById('search-table').style.display = 'block';
         } catch (err) {
@@ -115,21 +102,17 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
       $scope.searchInAll = (words) => {
         const result = {};
         words.forEach((word) => {
-          result[word] = $scope.invertedIndex.searchIndex(word);
+          result[word] = $scope.invertedIndex.searchAll(word);
         });
         return result;
       };
 
       $scope.searchInFile = (words, fileName) => {
         const result = {};
-        const output = {};
-        if ($scope.bookIndex[fileName]) {
-          output[fileName] = $scope.bookIndex[fileName];
-          words.forEach((word) => {
-            result[word] = output[fileName][word] || [];
-          });
-          return result;
-        }
+        words.forEach((word) => {
+          result[word] = $scope.invertedIndex.searchByFile(word, fileName);
+        });
+        return result;
       };
       document.getElementById('search-select')
       .addEventListener('change', $scope.search);

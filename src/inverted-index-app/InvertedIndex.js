@@ -35,6 +35,7 @@ class InvertedIndex {
 /**
  * Builds an index for a Book Objects
  * @param {Array} books - An Array of book objects
+ * @param {String} fileName - name of the input json file
  * @returns {Boolean} Build status as a feedback message
  * @memberOf InvertedIndex
  */
@@ -75,6 +76,14 @@ class InvertedIndex {
       this.fileIndex[fileName] = indexedFile;
     }
   }
+
+  /**
+   * Takes in a search query or word(s) and searches
+   * all indexed files to return books for which each word is found in
+   * @param {String} searchedWords - word(s) to search for
+   * @returns {Array} searchResult - books for which word is found in
+   * @memberOf InvertedIndex
+   */
   searchAll(searchedWords) {
     let searchResult = [];
     const wordsToSearch = InvertedIndexUtility
@@ -90,6 +99,14 @@ class InvertedIndex {
     });
     return searchResult;
   }
+  /**
+   * Takes in a search query or word(s) and searches the file
+   * for which that word is found to return books indexed for that word
+   * @param {String} searchedWords - word(s) to search for
+   * @param {String} fileName - name of the input json file
+   * @returns {Array} searchResult - books for which word is found in
+   * @memberOf InvertedIndex
+   */
   searchByFile(searchedWords, fileName) {
     let searchResult = [];
     const wordsToSearch = InvertedIndexUtility
@@ -97,7 +114,7 @@ class InvertedIndex {
      .generateToken(searchedWords));
     wordsToSearch.forEach((word) => {
       const indexedWords = Object.keys(this.fileIndex[fileName]);
-      if (indexedWords.indexOf(word) !== -1){
+      if (indexedWords.indexOf(word) !== -1) {
         searchResult = this.fileIndex[fileName][word];
       }
     });
