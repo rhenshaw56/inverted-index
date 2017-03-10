@@ -4,5 +4,6 @@
 karam.conf.js
 ./jasmine/*
 ./coverage/*
+./src/app/app.js
 
 
