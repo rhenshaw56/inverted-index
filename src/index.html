@@ -27,13 +27,12 @@
                 <select ng-model="selectedFile" ng-options="file.name for file in fileList">
                     <option value="" selected="selected">Select a Book File</option>
                 </select>
-                <!-- <button class= "btn" id ="btnUpload" onclick = "getFile()">upload</button> -->
                 <input class="btn" id="bookFile" accept=".json" style="display: none" type="file" multiple>
                 <label class="btn" for="bookFile">upload</label>
                 <button class="btn" id="btnCreateBook" onclick="switchDiv('create-book-div', 'upload-div')">Create book</button>
                 <button class="btn" type="button" ng-click="showIndexTable(selectedFile)">View Index</button>
                 <button class="btn" id="btnSearch" onclick="switchDiv('search-div', 'upload-div')">Search</button>
-                <!--<button class="btn" ng-click="showAllIndexes()" type="button">Index Library</button>-->
+
 
                 <br></br>
                 <p class="warning">{{buildMessage}}</p>
