@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Feb 16 2017 16:57:29 GMT+0100 (WAT)
+// Generated on Thu Feb 23 2017 20:27:53 GMT+0100 (WAT)
 
 module.exports = function(config) {
   config.set({
@@ -14,8 +14,11 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [      './src/inverted-index-app/InvertedIndex.js',
-      './jasmine/spec/spec.js'
+    files: [
+      './src/inverted-index-app/InvertedIndexUtility.js',
+      './src/inverted-index-app/InvertedIndex.js',
+      'jasmine/bundles/bundles.js'
+
     ],
 
 
@@ -27,13 +30,28 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      './src/inverted-index-app/InvertedIndex.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'spec', 'coverage', 'coveralls', 'verbose'],
+
+
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage/'
+    },
+    // coverageReporter: {
+    //   // specify a common output directory
+    //   // dir: 'build/reports/coverage',
+    //   reporters: [
+    //     { type: 'lcov', subdir: 'report-lcov' },
+    //     { type: 'lcovonly', subdir: '.', file: 'report-lcovonly.txt' }
+    //   ]
+    // },
 
 
     // web server port
@@ -51,6 +69,15 @@ module.exports = function(config) {
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
+
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-coverage',
+      'karma-coveralls',
+      'karma-jasmine',
+      'karma-spec-reporter',
+      'karma-verbose-reporter'
+    ],
 
 
     // start these browsers
