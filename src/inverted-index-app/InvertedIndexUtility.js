@@ -7,9 +7,9 @@
  */
 class InvertedIndexUtility {
 /**
- * Checks input to see if it conforms to specific standards.
+ * Checks input to see if it conforms to specific standards
  * @param {Array} file - Book file to be validated
- * @returns {boolean} true/false - returns validation status.
+ * @returns {Boolean} true/false - returns validation status
  * @memberOf InvertedIndex
  */
   static validateInput(file) {
@@ -29,7 +29,7 @@ class InvertedIndexUtility {
   }
 
 /**
-* Removes characters, whitespaces and converts text to array elements.
+* Removes characters, whitespaces and converts text to array elements
 * @param {String} text returned from getBookAsText
 * @returns {Array} -returns words in lower-cases with no characters
 * @memberOf InvertedIndexUtility

@@ -1,5 +1,6 @@
 /* eslint-disable no-unsed-vars */
 /* eslint-disable no-undef */
+/* eslint-disable no-unresolved */
 
 const emptyBook = require('./empty-book..json');
 const badBookOne = require('./bad-book-one.json');
@@ -9,7 +10,6 @@ const validBooks = require('./valid-books.json');
 const data = require('./data.json');
 const newData = require('./newData.json');
 const builtIndex = require('./testIndex.json');
-// const testData = require('./testBook.json');
 
 
 const invertedIndex = new InvertedIndex();
