@@ -53,23 +53,8 @@
                         </tbody>
                     </table>
                 </div>
-                <!--<div id = "mainIndex-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th ng-model>Words</th>
-                                <th ng-repeat ="mvalue_1 in library">{{mvalue_1}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="(mkey_2, mvalue_2) in mainIndex">
-                                <td>{{mkey_2}}</td>
-                                <td ng-repeat="mval in library">{{mvalue_2.indexOf(mval) !== -1 ? 'X':''}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>-->
             </div>
+
             <div id="create-book-div" style="display:none;">
                 <p>create a new book here</p>
                 <br></br>
@@ -106,7 +91,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="words" ></th>
+                                <th>Words</th>
                                 <th ng-repeat ="(mkey_1, mvalue_1) in headers">{{mvalue_1}}</th>
                             </tr>
                         </thead>

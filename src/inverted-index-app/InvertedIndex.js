@@ -63,7 +63,7 @@ class InvertedIndex {
     }
   }
 /**
- * Takes a file name and an indexed book and stores it in tne fileIndex
+ * Takes a file name and an indexed book and stores it in the fileIndex
  * @param {String} fileName - name of the input json file
  * @param {Object} indexedFile - index created for json file
  * @returns {none} ...

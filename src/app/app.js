@@ -53,6 +53,7 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
           index.buildIndex(book, fileName);
           const mainIndex = index.mainIndex;
           const books = index.bookNames;
+          $scope.library = $scope.invertedIndex.bookNames;
           $scope.addIndexToMainIndex(mainIndex, books, fileName);
         } else {
           $scope.fileList.pop(fileName);
@@ -60,7 +61,6 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
           $scope.buildMessage = `${fileName} IS NOT VALID!`;
         }
       };
-
       $scope.addIndexToMainIndex = (index, books, fileName) => {
         $scope.bookRegister[fileName] = books;
         $scope.mainIndex[fileName] = index;
@@ -72,7 +72,9 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
             $scope.currentIndex = $scope.mainIndex[file.name];
             $scope.bookList = $scope.bookRegister[file.name];
             $scope.buildMessage = '';
+            $scope.badMessage = '';
             document.getElementById('index-table').style.display = 'block';
+            $scope.buildStatus = true;
           }
         } catch (err) {
           $scope.buildMessage = 'Please select a book to view its Index';
@@ -81,21 +83,26 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
 
       $scope.search = (query, file) => {
         $scope.searchResult = {};
-        try {
-          $scope.buildMessage = '';
-          const words = query.split(' ');
-          if (!query) {
-            $scope.badMessage = 'Please Enter Some word(s) to initiate search';
-          } else if (file === undefined) {
-            $scope.searchResult = $scope.searchInAll(words);
-            $scope.headers = $scope.library;
-          } else if (file !== undefined) {
-            $scope.searchResult = $scope.searchInFile(words, file.name);
-            $scope.headers = $scope.bookRegister[file.name];
+        if (!query) {
+          $scope.badMessage = 'Please Enter Some word(s) to initiate search';
+        } else if ($scope.buildStatus) {
+          try {
+            $scope.buildMessage = '';
+            const words = query.split(' ');
+            if (file === undefined || file === null) {
+              $scope.searchResult = $scope.searchInAll(words);
+              $scope.headers = $scope.library;
+            } else {
+              $scope.searchResult = $scope.searchInFile(words, file.name);
+              $scope.headers = $scope.bookRegister[file.name];
+            }
+            document.getElementById('search-table').style.display = 'block';
+          } catch (err) {
+            document.getElementById('search-table').style.display = 'none';
+            $scope.badMessage = 'Book Changed! Enter A new Word!';
           }
-          document.getElementById('search-table').style.display = 'block';
-        } catch (err) {
-          $scope.badMessage = 'Book Changed! Enter A new Word!';
+        } else {
+          $scope.badMessage = 'Index not created yet! Create Index first';
         }
       };
 
@@ -114,8 +121,6 @@ const invertedIndexApp = angular.module('invertedIndexApp', [])
         });
         return result;
       };
-      document.getElementById('search-select')
-      .addEventListener('change', $scope.search);
       document.getElementById('bookFile')
       .addEventListener('change', $scope.uploadBooks);
     }]);
