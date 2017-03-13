@@ -6,3 +6,4 @@ coverage
 jasmine/.DS_Store
 jasmine/spec/.DS_Store
 jasmine/bundles
+jasmine/lib
